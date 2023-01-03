@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}INSCRIPTION{% endblock %}
+
+{% block body %}
+    <h1>Inscrivez-vous !</h1>
+
+    {{ include('user/_form.html.twig') }}
+
+    <a href="{{ path('app_user_index') }}">back to list</a>
+{% endblock %}

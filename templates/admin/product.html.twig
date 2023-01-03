@@ -1,0 +1,67 @@
+{% extends 'baseAdmin.html.twig' %}
+
+{% block title %}Product index{% endblock %}
+
+{% block body %}
+    <h1>Product list</h1>
+
+        <section style="background-color: #eee;">
+            <div class="container py-5">
+                <div class="row">
+                {% for product in products %}   
+            
+                
+                    <div class="col-lg-3 col-md-6 mb-4">
+                        
+                        {# <div class="card text-black">
+                            <i>ref : {{ product.id }}</i>
+                            <img src="../uploads/{{ product.image }}"  class="card-img-top" alt="{{ product.nom }}" />
+                            <div class="card-body">
+                                <div class="text-center">
+                                    <h5 class="card-title">{{ product.nom }}</h5>
+                                    <p class="text-muted mb-4">{{ product.dateAjout ? product.dateAjout|date('Y-m-d H:i:s') : '' }}</p>
+                                </div>
+                                <div>
+                                    <div class="d-flex justify-content-between">
+                                        <span>Prix : </span><span>{{ product.prix }} €</span>
+                                    </div>                            
+                                </div>
+                            </div>
+                        </div> #}
+
+
+                        <div class="card" >
+                            <img src="/uploads/{{ product.image }}" class="card-img-top" alt="{{ product.nom }}" style="width: 245px;height: 297px;object-fit: cover;">
+                            <i>ref : {{ product.id }}</i>
+                            <div class="card-body">
+                                <h5 class="card-title">{{ product.nom }}</h5>
+                                <p class="card-text">
+                                {{ product.dateAjout ? product.dateAjout|date('Y-m-d H:i:s') : '' }}<br />
+                                <span>Prix : </span><span>{{ product.prix }} €</span>
+                                </p>
+                                {# <a href="{{ path('app_admin_product_show', {'id': product.id}) }}" class="btn btn-primary">Voir en Détail</a> #}
+                                <a href="{{ path('app_admin_product_edit', {'id': product.id}) }}" class="btn btn-primary">edit</a>
+
+                                {{ include('admin/_product_delete_form.html.twig') }}
+                            </div>
+                        </div>
+                    </div>
+
+                    
+
+
+
+
+
+                
+
+                {% else %}
+                no records found
+                {% endfor %}
+                </div>
+            </div>
+        </section>
+
+
+    {# <a href="{{ path('app_product_new') }}">Create new</a> #}
+{% endblock %}

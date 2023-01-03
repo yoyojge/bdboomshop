@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Product index{% endblock %}
+
+{% block body %}
+    <h1>Product index</h1>
+
+        <section style="background-color: #eee;">
+            <div class="container py-5">
+                <div class="row">
+                {% for product in products %}   
+            
+                
+                    <div class="col-lg-3 col-md-6 mb-4">
+                        
+                        <div class="card text-black">
+                            <i>ref : {{ product.id }}</i>
+                            <img src="../uploads/{{ product.image }}"  class="card-img-top" alt="{{ product.nom }}" />
+                            <div class="card-body">
+                                <div class="text-center">
+                                    <h5 class="card-title">{{ product.nom }}</h5>
+                                    <p class="text-muted mb-4">{{ product.dateAjout ? product.dateAjout|date('Y-m-d H:i:s') : '' }}</p>
+                                </div>
+                                <div>
+                                    <div class="d-flex justify-content-between">
+                                        <span>Prix : </span><span>{{ product.prix }} €</span>
+                                    </div>                            
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                
+
+                {% else %}
+                no records found
+                {% endfor %}
+                </div>
+            </div>
+        </section>
+
+
+    <a href="{{ path('app_product_new') }}">Create new</a>
+{% endblock %}

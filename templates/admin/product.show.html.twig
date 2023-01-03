@@ -1,0 +1,60 @@
+{% extends 'baseAdmin.html.twig' %}
+
+{% block title %}Détail produit{% endblock %}
+
+{% block body %}
+    <h1>Détail produit</h1>
+
+    <table class="table">
+        <tbody>
+
+            <tr>
+                <td>
+                    <img src="/uploads/{{ product.image }}" class="" alt="{{ product.nom }}">
+                </td>
+                <td>
+                    <table>
+
+                         <tr>
+                            <th>Id</th>
+                            <td>{{ product.id }}</td>
+                        </tr>
+                        <tr>
+                            <th>Nom</th>
+                            <td>{{ product.nom }}</td>
+                        </tr>
+                        <tr>
+                            <th>DateAjout</th>
+                            <td>{{ product.dateAjout ? product.dateAjout|date('Y-m-d H:i:s') : '' }}</td>
+                        </tr>
+                        <tr>
+                            <th>Prix</th>
+                            <td>{{ product.prix }}</td>
+                        </tr>
+                        <tr>
+                            <th>Image</th>
+                            <td>{{ product.image }}</td>
+                        </tr>
+
+
+
+                    </table>
+                
+                    <div class="d-flex mt-5">
+                    <a href="{{ path('app_admin_product_edit', {'id': product.id}) }}" class="btn btn-primary">edit</a>
+
+                    {{ include('admin/_product_delete_form.html.twig') }}
+                    </div>
+
+
+                </td>
+            </tr>
+
+           
+        </tbody>
+    </table>
+
+    {# <a href="{{ path('app_product_index') }}">back to list</a> #}
+
+    
+{% endblock %}
