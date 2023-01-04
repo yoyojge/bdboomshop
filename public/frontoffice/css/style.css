@@ -6094,13 +6094,16 @@ a.close.disabled {
 }
 
 .bg-primary {
-  background-color: #D19C97 !important;
+  /* background-color: #D19C97 !important; */
+  background-color: #009EE0 !important;
+  
 }
 
 a.bg-primary:hover, a.bg-primary:focus,
 button.bg-primary:hover,
 button.bg-primary:focus {
-  background-color: #c17a74 !important;
+  /* background-color: #c17a74 !important; */
+  background-color: #DEDEDC !important;
 }
 
 .bg-secondary {
@@ -9581,4 +9584,14 @@ a.text-dark:hover, a.text-dark:focus {
   100% {
     transform: translateY(-15px);
   }
+}
+
+
+
+
+.logo {
+  background-image: url(../../img/BDboom.png);
+  background-size: cover;
+  width: 157px;
+  height: 150px;
 }

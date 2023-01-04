@@ -3,9 +3,31 @@
 {% block title %}INSCRIPTION{% endblock %}
 
 {% block body %}
-    <h1>Inscrivez-vous !</h1>
+    {# <h1>Inscrivez-vous !</h1> #}
 
-    {{ include('user/_form.html.twig') }}
+       
 
-    <a href="{{ path('app_user_index') }}">back to list</a>
+    <!-- Topbar Start -->
+    {{ include('/shop/topBar.html.twig') }}  
+    <!-- Topbar End -->
+
+
+    <!-- Navbar Start -->
+    <div class="container-fluid mb-5">
+        <div class="row border-top px-xl-5">
+            
+            {{ include('/shop/colGauche.html.twig') }}
+
+            
+
+            <div class="col-lg-9">
+
+                {{ include('/shop/nav.html.twig') }}  
+
+                {{ include('user/_form.html.twig') }}                 
+                
+            </div>
+        </div>
+    </div>
+    <!-- Navbar End -->
 {% endblock %}

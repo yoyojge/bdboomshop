@@ -30,36 +30,35 @@ class UserController extends AbstractController
             //si le user n'est pas connecté en admin
             return $this->redirectToRoute('app_product_index', [], Response::HTTP_SEE_OTHER);
 
-       }
-       
+       }    
        
         
     }
 
-    #[Route('/inscription', name: 'app_user_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, UserRepository $userRepository,  UserPasswordHasherInterface $passwordHasher): Response
-    {
-        $user = new User();
-        $form = $this->createForm(UserType::class, $user);
-        $form->handleRequest($request);
+    // #[Route('/inscription', name: 'app_user_new', methods: ['GET', 'POST'])]
+    // public function new(Request $request, UserRepository $userRepository,  UserPasswordHasherInterface $passwordHasher): Response
+    // {
+    //     $user = new User();
+    //     $form = $this->createForm(UserType::class, $user);
+    //     $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+    //     if ($form->isSubmitted() && $form->isValid()) {
 
-            $password = $passwordHasher->hashPassword($user, $request->get('user')['password']);
-            $user->setPassword ($password);
-            $user->setToken( $user->createToken() );
-            $user->setRoles(['ROLE_USER']);
+    //         $password = $passwordHasher->hashPassword($user, $request->get('user')['password']);
+    //         $user->setPassword ($password);
+    //         $user->setToken( $user->createToken() );
+    //         $user->setRoles(['ROLE_USER']);
 
-            $userRepository->save($user, true);
+    //         $userRepository->save($user, true);
 
-            return $this->redirectToRoute('app_product_index', [], Response::HTTP_SEE_OTHER);
-        }
+    //         return $this->redirectToRoute('app_product_index', [], Response::HTTP_SEE_OTHER);
+    //     }
 
-        return $this->renderForm('user/new.html.twig', [
-            'user' => $user,
-            'form' => $form,
-        ]);
-    }
+    //     return $this->renderForm('user/new.html.twig', [
+    //         'user' => $user,
+    //         'form' => $form,
+    //     ]);
+    // }
 
     #[Route('/{id}', name: 'app_user_show', methods: ['GET'])]
     public function show(User $user): Response

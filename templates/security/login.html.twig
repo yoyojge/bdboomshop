@@ -1,8 +1,33 @@
-{% extends 'baseAdmin.html.twig' %}
+{% extends 'base.html.twig' %}
 
 {% block title %}Log in!{% endblock %}
 
 {% block body %}
+
+
+
+
+
+
+    <!-- Topbar Start -->
+    {{ include('/shop/topBar.html.twig') }}  
+    <!-- Topbar End -->
+
+
+    <!-- Navbar Start -->
+    <div class="container-fluid mb-5">
+        <div class="row border-top px-xl-5">
+            
+            {{ include('/shop/colGauche.html.twig') }}
+
+            
+
+            <div class="col-lg-9">
+
+                {{ include('/shop/nav.html.twig') }}  
+
+                
+
 <form method="post">
     {% if error %}
         <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
@@ -45,5 +70,18 @@
             Sign in
         </button>
     </div>
-</form>
+</form>             
+                
+            </div>
+        </div>
+    </div>
+    <!-- Navbar End -->
+
+
+
+
+
+
+
+
 {% endblock %}
