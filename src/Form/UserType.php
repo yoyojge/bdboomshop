@@ -7,18 +7,20 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+
 class UserType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('password')
+            ->add('password', TextType::class, ['mapped' => false] )
             ->add('nom')
             ->add('prenom')
             ->add('email')
             ->add('adresse')
             ->add('ville')
-            ->add('code_postal')
+            ->add('codePostal')
             ->add('pays')
         ;
     }

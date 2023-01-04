@@ -2,21 +2,30 @@
 
 namespace App\Controller;
 
-
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-
+use Symfony\Component\HttpFoundation\Request;
 
 use App\Entity\Product;
 use App\Form\ProductType;
 use App\Repository\ProductRepository;
 
-use Symfony\Component\HttpFoundation\Request;
+use App\Entity\Category;
+use App\Form\CategoryType;
+use App\Repository\CategoryRepository;
+
+use App\Entity\User;
+use App\Form\UserType;
+use App\Repository\UserRepository;
+
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+
 
 //pour l'upload
 use Symfony\Component\String\Slugger\SluggerInterface;
+
+
 
 
 #[Route('/admin')]
@@ -30,6 +39,11 @@ class AdminController extends AbstractController
         return $this->renderForm('admin/index.html.twig', []);
     }
 
+
+
+    
+    /* *******************************/
+     /* DEBUT PRODUITS */
 
     //page d'affichage des produits dans le dashboard de l'admin
     #[Route('/dashboardProduct', name: 'app_admin_product', methods: ['GET'])]
@@ -155,12 +169,97 @@ class AdminController extends AbstractController
     }
 
     
+    /* FIN PRODUITS */
+    /* *******************************/
+
+
+
+
+
+    /* *******************************/
+    /* DEBUT CATEGORY */
+
+    #[Route('/dashboardCategory', name: 'app_admin_category_index', methods: ['GET'])]
+    public function dashboardCategory(CategoryRepository $categoryRepository): Response
+    {
+        return $this->render('category/index.html.twig', [
+            'categories' => $categoryRepository->findAll(),
+        ]);
+    }
+
+
+    #[Route('/dashboardCategoryNew', name: 'app_admin_category_new', methods: ['GET', 'POST'])]
+    public function dashboardCategoryNew(Request $request, CategoryRepository $categoryRepository): Response
+    {
+        $category = new Category();
+        $form = $this->createForm(CategoryType::class, $category);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $categoryRepository->save($category, true);
+
+            return $this->redirectToRoute('app_category_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('category/new.html.twig', [
+            'category' => $category,
+            'form' => $form,
+        ]);
+    }
+
+
+
+    /* FIN CATEGORY */
+    /* *******************************/
 
 
 
 
 
 
+    /* *******************************/
+    /* DEBUT USERS */
+
+    #[Route('/dashboardUser', name: 'app_admin_user_index', methods: ['GET'])]
+    public function dashboardUser(UserRepository $userRepository): Response
+    {
+             
+        return $this->render('user/index.html.twig', [
+            'users' => $userRepository->findAll(),
+        ]);   
+
+    }
+
+
+
+    #[Route('/dashboardUserNew', name: 'app_admin_user_new', methods: ['GET', 'POST'])]
+    public function dashboardUserNew(Request $request, UserRepository $userRepository,  UserPasswordHasherInterface $passwordHasher): Response
+    {
+        $user = new User();
+        $form = $this->createForm(UserType::class, $user);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $password = $passwordHasher->hashPassword($user, $request->get('user')['password']);
+            $user->setPassword ($password);
+            $user->setToken( $user->createToken() );
+            $user->setRoles(['ROLE_USER']);
+
+            $userRepository->save($user, true);
+
+            return $this->redirectToRoute('app_admin_user_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('admin/user.new.html.twig', [
+            'user' => $user,
+            'form' => $form,
+        ]);
+    }
+
+
+    /* FIN USERS */
+    /* *******************************/
 
 
 

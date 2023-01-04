@@ -85,10 +85,10 @@
                     </a>
                     <ul class="cat-sub-menu">
                         <li>
-                            <a href="{{ path('app_admin_product') }}">Toutes les catégories</a>
+                            <a href="{{ path('app_admin_category_index') }}">Toutes les catégories</a>
                         </li>
                         <li>
-                            <a href="{{ path('app_admin_product_new') }}">Ajouter une catégorie</a>
+                            <a href="{{ path('app_admin_category_new') }}">Ajouter une catégorie</a>
                         </li>
                     </ul>
                 </li>
@@ -102,10 +102,10 @@
                     </a>
                     <ul class="cat-sub-menu">
                         <li>
-                            <a href="users-01.html">Users-01</a>
+                            <a href="{{ path('app_admin_user_index') }}">Tous les users</a>
                         </li>
                         <li>
-                            <a href="users-02.html">Users-02</a>
+                            <a href="{{ path('app_admin_user_new') }}">Ajouter un user</a>
                         </li>
                     </ul>
                 </li>
@@ -128,6 +128,14 @@
                         <span class="sr-only">Toggle menu</span>
                         <span class="icon menu-toggle--gray" aria-hidden="true"></span>
                     </button>
+
+                            
+                    {% if app.user %}
+                        <div class="mb-3">
+                            You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
+                        </div>
+                    {% endif %}
+
                     {# <div class="search-wrapper">
                         <i data-feather="search" aria-hidden="true"></i>
                         <input type="text" placeholder="Enter keywords ..." required>
