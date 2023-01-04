@@ -3,19 +3,44 @@
 {% block title %}Product index{% endblock %}
 
 {% block body %}
-    <h1>Product index</h1>
 
-        <section style="background-color: #eee;">
-            <div class="container py-5">
-                <div class="row">
-                {% for product in products %}   
+
+
+    <!-- Topbar Start -->
+    {{ include('/shop/topBar.html.twig') }}  
+    <!-- Topbar End -->
+
+
+    <!-- Navbar Start -->
+    <div class="container-fluid mb-5">
+        <div class="row border-top px-xl-5">
             
-                
-                    <div class="col-lg-3 col-md-6 mb-4">
-                        
+            {{ include('/shop/colGauche.html.twig') }}
+
+            
+
+            <div class="col-lg-9">
+
+                {{ include('/shop/nav.html.twig') }}  
+
+
+
+
+
+{# <h1>Product index</h1> #}
+
+<section style="background-color: #eee;">
+    <div class="container py-5">
+        <div class="row">
+        {% for product in products %}   
+    
+            
+                <div class="col-lg-3 col-md-6 mb-4" onclick="">
+
+                    <a href="{{ path('app_shop_product_show', {'id': product.id}) }}" class="btn">
                         <div class="card text-black">
                             <i>ref : {{ product.id }}</i>
-                            <img src="../uploads/{{ product.image }}"  class="card-img-top" alt="{{ product.nom }}" />
+                            <img src="../uploads/{{ product.image }}"  class="card-img-top" alt="{{ product.nom }}" style="width: 245px;height: 297px;object-fit: cover;" />
                             <div class="card-body">
                                 <div class="text-center">
                                     <h5 class="card-title">{{ product.nom }}</h5>
@@ -27,17 +52,59 @@
                                     </div>                            
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                
+                        </div>                        
+                     </a>
 
-                {% else %}
-                no records found
-                {% endfor %}
                 </div>
+           
+        
+
+        {% else %}
+        no records found
+        {% endfor %}
+        </div>
+    </div>
+</section>
+
+
+    {# <a href="{{ path('app_product_new') }}">Create new</a> #}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                
             </div>
-        </section>
+        </div>
+    </div>
+    <!-- Navbar End -->
 
 
-    <a href="{{ path('app_product_new') }}">Create new</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
 {% endblock %}
