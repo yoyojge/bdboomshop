@@ -33,15 +33,13 @@ class PanierController extends AbstractController
     
     #[Route('/panier', name: 'app_shop_panier', methods: ['GET', 'POST'])]
     public function panier(   Request $request, ProductRepository $productRepository, CategoryRepository $categoryRepository,  Session $session): Response
-    {      
-               
+    {                    
     
         // $arrayProductSessionTab[ $request->request->get('product') ] = $request->request->get('qtite');
         $id = $request->request->get('product');
 
         //je recupere la session si elle existe , sinon, c'est un tableau vide
-        $panier = $session->get('panier', []);
-        
+        $panier = $session->get('panier', []);        
 
         if(!empty($panier[$id])){
             $panier[$id] += $request->request->get('qtite');
@@ -59,28 +57,50 @@ class PanierController extends AbstractController
         $session->set('QtiteItemCart',  $QtiteItemCart);
 
         // dd($session);
-
         
         $session->getFlashBag()->add(
             'Bravo',
             'Vos articles ont été ajoutés au panier'
         );       
     
-        // session_unset();
-
-
-
-
-    
-        return $this->render('shop/index.html.twig', [
-            'products' => $productRepository->findAll(),
-            'categories' => $categoryRepository->findAll(),
-            'QtiteItemCart' =>  $QtiteItemCart
-
-        ]);
+        // session_unset();    
+        // return $this->render('shop/index.html.twig', [
+        //     'products' => $productRepository->findAll(),
+        //     'categories' => $categoryRepository->findAll(),
+        //     'QtiteItemCart' =>  $QtiteItemCart
+        // ]);
+        return $this->redirectToRoute('app_shop_index', [], Response::HTTP_SEE_OTHER);
         
     }
 
+
+    #[Route('/panierShow', name: 'app_shop_panierShow', methods: ['GET', 'POST'])]
+    public function panierShow(   Request $request, ProductRepository $productRepository, CategoryRepository $categoryRepository,  Session $session): Response
+    {   
+        $QtiteItemCart = $session->get('QtiteItemCart', 0); 
+        
+        //on recupere la session panier
+        $panier = $session->get('panier', []); 
+
+        return $this->render('shop/panierShow.html.twig', [
+            'products' => $productRepository->findAll(),
+            'categories' => $categoryRepository->findAll(),
+            'QtiteItemCart' =>  $QtiteItemCart,
+            'panier' =>  $panier,
+
+        ]);
+    }
+
+    
+    #[Route('/panierVide', name: 'app_shop_panierVide', methods: ['GET', 'POST'])]
+    public function panierVide(   Request $request, ProductRepository $productRepository, CategoryRepository $categoryRepository,  Session $session): Response
+    {   
+        $session->set('panier', []);
+        $session->set('QtiteItemCart',  0);
+        return $this->redirectToRoute('app_shop_panierShow', [], Response::HTTP_SEE_OTHER);
+    }
+
+    
 
     
 
